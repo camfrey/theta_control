@@ -33,14 +33,9 @@
 #include "xtmrctr.h"
 #include "xparameters.h"
 #include "xil_exception.h"
-
-#ifdef XPAR_INTC_0_DEVICE_ID
+#include "xsysmon.h"
 #include "xintc.h"
-#include <stdio.h>
-#else
-#include "xscugic.h"
 #include "xil_printf.h"
-#endif
 
 /************************** Constant Definitions *****************************/
 /*
@@ -74,13 +69,41 @@
 #define DUTYCYCLE_DIVISOR       4            /* Duty cycle Divisor */
 #define WAIT_COUNT              PWM_PERIOD   /* Interrupt wait counter */
 
+/*
+ * The following constants map to the XPAR parameters created in the
+ * xparameters.h file. They are defined here such that a user can easily
+ * change all the needed parameters in one place.
+ */
+#ifndef TESTAPP_GEN
+#define SYSMON_DEVICE_ID	XPAR_SYSMON_0_DEVICE_ID
+#endif
+
+#ifdef XPAR_INTC_0_DEVICE_ID	/* Interrupt Controller */
+#define INTC_DEVICE_ID		XPAR_INTC_0_DEVICE_ID
+#define INTR_ID			XPAR_INTC_0_SYSMON_0_VEC_ID
+#else	/* SCUGIC Interrupt Controller */
+#define INTC_DEVICE_ID		XPAR_SCUGIC_SINGLE_DEVICE_ID
+#define INTR_ID		XPAR_FABRIC_SYSTEM_MANAGEMENT_WIZ_0_IP2INTC_IRPT_INTR
+#endif /* XPAR_INTC_0_DEVICE_ID */
+
+#ifdef XPAR_INTC_0_DEVICE_ID
+#define INTC		XIntc
+#define INTC_HANDLER	XIntc_InterruptHandler
+#else
+#define INTC		XScuGic
+#define INTC_HANDLER	XScuGic_InterruptHandler
+#endif
+
 /**************************** Type Definitions *******************************/
 
 /***************** Macros (Inline Functions) Definitions *********************/
 
 /************************** Function Prototypes ******************************/
-int TmrCtrPwmExample(INTC *IntcInstancePtr, XTmrCtr *InstancePtr, u16 DeviceId,
+int TmrCtrInit(INTC *IntcInstancePtr, XTmrCtr *InstancePtr, u16 DeviceId,
 								u16 IntrId);
+
+int XADCInit(XSysMon* SysMonInstPtr, u16 SysMonDeviceId);
+
 static void TimerCounterHandler(void *CallBackRef, u8 TmrCtrNumber);
 static int TmrCtrSetupIntrSystem(INTC *IntcInstancePtr, XTmrCtr *InstancePtr,
 						u16 DeviceId, u16 IntrId);
@@ -89,6 +112,8 @@ static void TmrCtrDisableIntr(INTC *IntcInstancePtr, u16 IntrId);
 /************************** Variable Definitions *****************************/
 INTC InterruptController;  /* The instance of the Interrupt Controller */
 XTmrCtr TimerCounterInst;  /* The instance of the Timer Counter */
+
+static XSysMon SysMonInst; 	  /* System Monitor driver instance */
 
 /*
  * The following variables are shared between non-interrupt processing and
@@ -114,16 +139,97 @@ int main(void)
 	int Status;
 
 	/* Run the Timer Counter PWM example */
-	Status = TmrCtrPwmExample(&InterruptController, &TimerCounterInst,
+	Status = TmrCtrInit(&InterruptController, &TimerCounterInst,
 				  TMRCTR_DEVICE_ID, TMRCTR_INTERRUPT_ID);
 	if (Status != XST_SUCCESS) {
 		xil_printf("Tmrctr PWM Example Failed\r\n");
 		return XST_FAILURE;
 	}
 
-	xil_printf("Successfully ran Tmrctr PWM Example\r\n");
+	Status = XADCInit(&SysMonInst,SYSMON_DEVICE_ID);
+
+	while(1){
+		u16 adcData = 0;
+		adcData = XSysMon_GetAdcData(&SysMonInst,XSM_CH_AUX_MIN + 4);
+		xil_printf("%u\r\n",(adcData >> 4) & 0xFFF);
+	}
+	TmrCtrDisableIntr(&InterruptController, TMRCTR_INTERRUPT_ID);
+	if (Status != XST_SUCCESS) {
+		xil_printf("Tmrctr PWM Example Failed\r\n");
+		return XST_FAILURE;
+	}
+	//xil_printf("Successfully ran Tmrctr PWM Example\r\n");
 	return XST_SUCCESS;
 }
+
+/****************************************************************************/
+/**
+*
+* This function runs a test on the System Monitor/ADC device using the
+* driver APIs.
+*
+* The function does the following tasks:
+*	- Initiate the System Monitor/ADC device driver instance
+*	- Run self-test on the device
+*	- Reset the device
+*	- Set up alarm for VCCINT
+*	- Set up the configuration registers for single channel continuous mode
+*	for VCCINT channel
+*	- Setup interrupt system
+*	- Enable interrupts
+*	- Wait until the VCCINT alarm interrupt occurs
+*
+* @param	IntcInstancePtr is a pointer to the Interrupt Controller
+* @param	SysMonInstPtr is a pointer to the XSysMon driver Instance.
+* @param	SysMonDeviceId is the XPAR_<SYSMON_ADC_instance>_DEVICE_ID value
+*		from xparameters.h.
+*
+* @return
+*		- XST_SUCCESS if the example has completed successfully.
+*		- XST_FAILURE if the example has failed.
+*
+* @note		This function may never return if no interrupt occurs.
+*
+****************************************************************************/
+int XADCInit(XSysMon* SysMonInstPtr, u16 SysMonDeviceId)
+{
+	int Status;
+	XSysMon_Config *ConfigPtr;
+
+	/*
+	 * Initialize the SysMon driver.
+	 */
+	ConfigPtr = XSysMon_LookupConfig(SysMonDeviceId);
+	if (ConfigPtr == NULL) {
+		return XST_FAILURE;
+	}
+	XSysMon_CfgInitialize(SysMonInstPtr, ConfigPtr, ConfigPtr->BaseAddress);
+
+	/*
+	 * Self Test the System Monitor/ADC device.
+	 */
+	Status = XSysMon_SelfTest(SysMonInstPtr);
+	if (Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+	XSysMon_SetSequencerMode(SysMonInstPtr, XSM_SEQ_MODE_SINGCHAN);
+
+	/*
+	 * Set the configuration registers for single channel continuous mode
+	 * of operation for the VCCINT channel.
+	 */
+	Status=  XSysMon_SetSingleChParams(SysMonInstPtr, XSM_CH_AUX_MIN + 4,
+						FALSE, FALSE, FALSE);
+	if(Status != XST_SUCCESS) {
+		return XST_FAILURE;
+	}
+
+	XSysMon_SetAlarmEnables(SysMonInstPtr, 0x0);
+
+	return XST_SUCCESS;
+}
+
 
 /*****************************************************************************/
 /**
@@ -142,15 +248,15 @@ int main(void)
 * @note		none.
 *
 *****************************************************************************/
-int TmrCtrPwmExample(INTC *IntcInstancePtr, XTmrCtr *TmrCtrInstancePtr,
+int TmrCtrInit(INTC *IntcInstancePtr, XTmrCtr *TmrCtrInstancePtr,
 						u16 DeviceId, u16 IntrId)
 {
-	u8  DutyCycle;
-	u8  NoOfCycles;
-	u8  Div;
-	u32 Period;
-	u32 HighTime;
-	u64 WaitCount;
+//	u8  DutyCycle;
+//	u8  NoOfCycles;
+//	u8  Div;
+//	u32 Period;
+//	u32 HighTime;
+//	u64 WaitCount;
 	int Status;
 
 	/*
@@ -197,21 +303,20 @@ int TmrCtrPwmExample(INTC *IntcInstancePtr, XTmrCtr *TmrCtrInstancePtr,
 	 * decrement the divisor by 1, as a result Duty cycle increases
 	 * proportionally. This is done until duty cycle is reached upto
 	 * MAX_DUTYCYCLE
-	 */
 	Div = DUTYCYCLE_DIVISOR;
 
-	/* Configure PWM */
+	// Configure PWM
 	do {
-		/* Fail check for 0 divisor */
+		//Fail check for 0 divisor
 		if (!Div) {
 			Status = XST_FAILURE;
 			goto err;
 		}
 
-		/* Disable PWM for reconfiguration */
+		//Disable PWM for reconfiguration
 		XTmrCtr_PwmDisable(TmrCtrInstancePtr);
 
-		/* Configure PWM */
+		//Configure PWM
 		Period = PWM_PERIOD;
 		HighTime = PWM_PERIOD / Div--;
 		DutyCycle = XTmrCtr_PwmConfigure(TmrCtrInstancePtr, Period,
@@ -223,7 +328,7 @@ int TmrCtrPwmExample(INTC *IntcInstancePtr, XTmrCtr *TmrCtrInstancePtr,
 
 		xil_printf("PWM Configured for Duty Cycle = %d\r\n", DutyCycle);
 
-		/* Enable PWM */
+		//Enable PWM
 		XTmrCtr_PwmEnable(TmrCtrInstancePtr);
 
 		NoOfCycles = 0;
@@ -236,7 +341,7 @@ int TmrCtrPwmExample(INTC *IntcInstancePtr, XTmrCtr *TmrCtrInstancePtr,
 				NoOfCycles++;
 			}
 
-			/* Interrupt did not occur as expected */
+			//Interrupt did not occur as expected
 			if (!(--WaitCount)) {
 				return XST_FAILURE;
 			}
@@ -245,12 +350,12 @@ int TmrCtrPwmExample(INTC *IntcInstancePtr, XTmrCtr *TmrCtrInstancePtr,
 
 	Status = XST_SUCCESS;
 err:
-	/* Disable PWM */
+	//Disable PWM
 	XTmrCtr_PwmDisable(TmrCtrInstancePtr);
 
-	/* Disable interrupts */
+	//Disable interrupts
 	TmrCtrDisableIntr(IntcInstancePtr, DeviceId);
-
+	 */
 	return Status;
 }
 
