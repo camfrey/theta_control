@@ -20,7 +20,7 @@ set script_folder [_tcl::get_script_folder]
 ################################################################
 # Check if script is running in correct Vivado version.
 ################################################################
-set scripts_vivado_version 2021.2
+set scripts_vivado_version 2021.1
 set current_vivado_version [version -short]
 
 if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
@@ -288,14 +288,14 @@ proc create_root_design { parentCell } {
 
 
   # Create ports
-  set IO_L1N_T0_AD4N_35 [ create_bd_port -dir I IO_L1N_T0_AD4N_35 ]
-  set IO_L1P_T0_AD4P_35 [ create_bd_port -dir I IO_L1P_T0_AD4P_35 ]
   set pwm [ create_bd_port -dir O pwm ]
   set reset [ create_bd_port -dir I -type rst reset ]
   set_property -dict [ list \
    CONFIG.POLARITY {ACTIVE_HIGH} \
  ] $reset
   set sysclk [ create_bd_port -dir I -type clk -freq_hz 12000000 sysclk ]
+  set xadc_AD4N_aux4 [ create_bd_port -dir I xadc_AD4N_aux4 ]
+  set xadc_AD4P_aux4 [ create_bd_port -dir I xadc_AD4P_aux4 ]
 
   # Create instance: axi_timer_0, and set properties
   set axi_timer_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_timer:2.0 axi_timer_0 ]
@@ -361,10 +361,12 @@ proc create_root_design { parentCell } {
   # Create instance: xadc_wiz_0, and set properties
   set xadc_wiz_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xadc_wiz:3.3 xadc_wiz_0 ]
   set_property -dict [ list \
-   CONFIG.ADC_CONVERSION_RATE {500} \
-   CONFIG.DCLK_FREQUENCY {50} \
+   CONFIG.ADC_CONVERSION_RATE {200} \
+   CONFIG.DCLK_FREQUENCY {100} \
+   CONFIG.ENABLE_AXI4STREAM {true} \
    CONFIG.ENABLE_EXTERNAL_MUX {false} \
    CONFIG.EXTERNAL_MUX_CHANNEL {VP_VN} \
+   CONFIG.FIFO_DEPTH {64} \
    CONFIG.SEQUENCER_MODE {Off} \
    CONFIG.SINGLE_CHANNEL_SELECTION {VAUXP4_VAUXN4} \
    CONFIG.TIMING_MODE {Continuous} \
@@ -384,15 +386,15 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net microblaze_0_interrupt [get_bd_intf_pins microblaze_0/INTERRUPT] [get_bd_intf_pins microblaze_0_axi_intc/interrupt]
 
   # Create port connections
-  connect_bd_net -net IO_L1N_T0_AD4N_35_1 [get_bd_ports IO_L1N_T0_AD4N_35] [get_bd_pins xadc_wiz_0/vauxn4]
-  connect_bd_net -net IO_L1P_T0_AD4P_35_1 [get_bd_ports IO_L1P_T0_AD4P_35] [get_bd_pins xadc_wiz_0/vauxp4]
+  connect_bd_net -net IO_L1N_T0_AD4N_35_1 [get_bd_ports xadc_AD4N_aux4] [get_bd_pins xadc_wiz_0/vauxn4]
+  connect_bd_net -net IO_L1P_T0_AD4P_35_1 [get_bd_ports xadc_AD4P_aux4] [get_bd_pins xadc_wiz_0/vauxp4]
   connect_bd_net -net axi_timer_0_interrupt [get_bd_pins axi_timer_0/interrupt] [get_bd_pins microblaze_0_xlconcat/In1]
   connect_bd_net -net axi_timer_0_pwm0 [get_bd_ports pwm] [get_bd_pins axi_timer_0/pwm0]
   connect_bd_net -net axi_uartlite_0_interrupt [get_bd_pins axi_uartlite_0/interrupt] [get_bd_pins microblaze_0_xlconcat/In0]
   connect_bd_net -net clk_wiz_1_locked [get_bd_pins clk_wiz_1/locked] [get_bd_pins rst_clk_wiz_1_100M/dcm_locked]
   connect_bd_net -net ip2intc_irpt [get_bd_pins microblaze_0_xlconcat/In2] [get_bd_pins xadc_wiz_0/ip2intc_irpt]
   connect_bd_net -net mdm_1_debug_sys_rst [get_bd_pins mdm_1/Debug_SYS_Rst] [get_bd_pins rst_clk_wiz_1_100M/mb_debug_sys_rst]
-  connect_bd_net -net microblaze_0_Clk [get_bd_pins axi_timer_0/s_axi_aclk] [get_bd_pins axi_uartlite_0/s_axi_aclk] [get_bd_pins clk_wiz_1/clk_100M] [get_bd_pins microblaze_0/Clk] [get_bd_pins microblaze_0_axi_intc/processor_clk] [get_bd_pins microblaze_0_axi_intc/s_axi_aclk] [get_bd_pins microblaze_0_axi_periph/ACLK] [get_bd_pins microblaze_0_axi_periph/M00_ACLK] [get_bd_pins microblaze_0_axi_periph/M01_ACLK] [get_bd_pins microblaze_0_axi_periph/M02_ACLK] [get_bd_pins microblaze_0_axi_periph/M03_ACLK] [get_bd_pins microblaze_0_axi_periph/S00_ACLK] [get_bd_pins microblaze_0_local_memory/LMB_Clk] [get_bd_pins rst_clk_wiz_1_100M/slowest_sync_clk] [get_bd_pins xadc_wiz_0/s_axi_aclk]
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins axi_timer_0/s_axi_aclk] [get_bd_pins axi_uartlite_0/s_axi_aclk] [get_bd_pins clk_wiz_1/clk_100M] [get_bd_pins microblaze_0/Clk] [get_bd_pins microblaze_0_axi_intc/processor_clk] [get_bd_pins microblaze_0_axi_intc/s_axi_aclk] [get_bd_pins microblaze_0_axi_periph/ACLK] [get_bd_pins microblaze_0_axi_periph/M00_ACLK] [get_bd_pins microblaze_0_axi_periph/M01_ACLK] [get_bd_pins microblaze_0_axi_periph/M02_ACLK] [get_bd_pins microblaze_0_axi_periph/M03_ACLK] [get_bd_pins microblaze_0_axi_periph/S00_ACLK] [get_bd_pins microblaze_0_local_memory/LMB_Clk] [get_bd_pins rst_clk_wiz_1_100M/slowest_sync_clk] [get_bd_pins xadc_wiz_0/s_axi_aclk] [get_bd_pins xadc_wiz_0/s_axis_aclk]
   connect_bd_net -net microblaze_0_intr [get_bd_pins microblaze_0_axi_intc/intr] [get_bd_pins microblaze_0_xlconcat/dout]
   connect_bd_net -net reset_1 [get_bd_ports reset] [get_bd_pins clk_wiz_1/reset] [get_bd_pins rst_clk_wiz_1_100M/ext_reset_in]
   connect_bd_net -net rst_clk_wiz_1_100M_bus_struct_reset [get_bd_pins microblaze_0_local_memory/SYS_Rst] [get_bd_pins rst_clk_wiz_1_100M/bus_struct_reset]

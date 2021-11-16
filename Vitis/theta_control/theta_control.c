@@ -133,6 +133,7 @@ static int   HighTimerHit = FALSE;
 *
 * @note		None.
 *
+	Status=  XSysMon_SetSingleChParams(SysMonInstPtr, XSM_CH_AUX_MIN+3,
 ******************************************************************************/
 int main(void)
 {
@@ -149,10 +150,11 @@ int main(void)
 	Status = XADCInit(&SysMonInst,SYSMON_DEVICE_ID);
 
 	while(1){
-		u16 adcData = 0;
-		adcData = XSysMon_GetAdcData(&SysMonInst,XSM_CH_AUX_MIN + 4);
-		xil_printf("%u\r\n",(adcData >> 4) & 0xFFF);
+//		u16 adcData = 0;
+//		adcData = XSysMon_GetAdcData(&SysMonInst,XSM_CH_AUX_MIN + 4);
+//		xil_printf("%u\r\n",(adcData >> 4) & 0xFFF);
 	}
+
 	TmrCtrDisableIntr(&InterruptController, TMRCTR_INTERRUPT_ID);
 	if (Status != XST_SUCCESS) {
 		xil_printf("Tmrctr PWM Example Failed\r\n");
@@ -172,7 +174,7 @@ int main(void)
 *	- Initiate the System Monitor/ADC device driver instance
 *	- Run self-test on the device
 *	- Reset the device
-*	- Set up alarm for VCCINT
+*	- Set up alarm fQuick Accessor VCCINT
 *	- Set up the configuration registers for single channel continuous mode
 *	for VCCINT channel
 *	- Setup interrupt system
