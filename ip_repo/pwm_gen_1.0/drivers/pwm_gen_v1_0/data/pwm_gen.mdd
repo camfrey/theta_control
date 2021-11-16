@@ -1,0 +1,10 @@
+
+
+OPTION psf_version = 2.1;
+
+BEGIN DRIVER pwm_gen
+	OPTION supported_peripherals = (pwm_gen);
+	OPTION copyfiles = all;
+	OPTION VERSION = 1.0;
+	OPTION NAME = pwm_gen;
+END DRIVER

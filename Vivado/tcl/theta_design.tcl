@@ -132,6 +132,7 @@ xilinx.com:ip:microblaze:11.0\
 xilinx.com:ip:axi_intc:4.1\
 xilinx.com:ip:xlconcat:2.1\
 xilinx.com:ip:proc_sys_reset:5.0\
+xilinx.com:ip:system_ila:1.1\
 xilinx.com:ip:xadc_wiz:3.3\
 xilinx.com:ip:lmb_bram_if_cntlr:4.0\
 xilinx.com:ip:lmb_v10:3.0\
@@ -294,8 +295,8 @@ proc create_root_design { parentCell } {
    CONFIG.POLARITY {ACTIVE_HIGH} \
  ] $reset
   set sysclk [ create_bd_port -dir I -type clk -freq_hz 12000000 sysclk ]
-  set xadc_AD4N_aux4 [ create_bd_port -dir I xadc_AD4N_aux4 ]
-  set xadc_AD4P_aux4 [ create_bd_port -dir I xadc_AD4P_aux4 ]
+  set xadc_AD4N [ create_bd_port -dir I xadc_AD4N ]
+  set xadc_AD4P [ create_bd_port -dir I xadc_AD4P ]
 
   # Create instance: axi_timer_0, and set properties
   set axi_timer_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_timer:2.0 axi_timer_0 ]
@@ -358,6 +359,14 @@ proc create_root_design { parentCell } {
    CONFIG.USE_BOARD_FLOW {true} \
  ] $rst_clk_wiz_1_100M
 
+  # Create instance: system_ila_0, and set properties
+  set system_ila_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:system_ila:1.1 system_ila_0 ]
+  set_property -dict [ list \
+   CONFIG.C_BRAM_CNT {5} \
+   CONFIG.C_DATA_DEPTH {16384} \
+   CONFIG.C_SLOT_0_INTF_TYPE {xilinx.com:interface:axis_rtl:1.0} \
+ ] $system_ila_0
+
   # Create instance: xadc_wiz_0, and set properties
   set xadc_wiz_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xadc_wiz:3.3 xadc_wiz_0 ]
   set_property -dict [ list \
@@ -384,23 +393,24 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net microblaze_0_ilmb_1 [get_bd_intf_pins microblaze_0/ILMB] [get_bd_intf_pins microblaze_0_local_memory/ILMB]
   connect_bd_intf_net -intf_net microblaze_0_intc_axi [get_bd_intf_pins microblaze_0_axi_intc/s_axi] [get_bd_intf_pins microblaze_0_axi_periph/M00_AXI]
   connect_bd_intf_net -intf_net microblaze_0_interrupt [get_bd_intf_pins microblaze_0/INTERRUPT] [get_bd_intf_pins microblaze_0_axi_intc/interrupt]
+connect_bd_intf_net -intf_net xadc_wiz_0_M_AXIS [get_bd_intf_pins system_ila_0/SLOT_0_AXIS] [get_bd_intf_pins xadc_wiz_0/M_AXIS]
 
   # Create port connections
-  connect_bd_net -net IO_L1N_T0_AD4N_35_1 [get_bd_ports xadc_AD4N_aux4] [get_bd_pins xadc_wiz_0/vauxn4]
-  connect_bd_net -net IO_L1P_T0_AD4P_35_1 [get_bd_ports xadc_AD4P_aux4] [get_bd_pins xadc_wiz_0/vauxp4]
   connect_bd_net -net axi_timer_0_interrupt [get_bd_pins axi_timer_0/interrupt] [get_bd_pins microblaze_0_xlconcat/In1]
   connect_bd_net -net axi_timer_0_pwm0 [get_bd_ports pwm] [get_bd_pins axi_timer_0/pwm0]
   connect_bd_net -net axi_uartlite_0_interrupt [get_bd_pins axi_uartlite_0/interrupt] [get_bd_pins microblaze_0_xlconcat/In0]
   connect_bd_net -net clk_wiz_1_locked [get_bd_pins clk_wiz_1/locked] [get_bd_pins rst_clk_wiz_1_100M/dcm_locked]
   connect_bd_net -net ip2intc_irpt [get_bd_pins microblaze_0_xlconcat/In2] [get_bd_pins xadc_wiz_0/ip2intc_irpt]
   connect_bd_net -net mdm_1_debug_sys_rst [get_bd_pins mdm_1/Debug_SYS_Rst] [get_bd_pins rst_clk_wiz_1_100M/mb_debug_sys_rst]
-  connect_bd_net -net microblaze_0_Clk [get_bd_pins axi_timer_0/s_axi_aclk] [get_bd_pins axi_uartlite_0/s_axi_aclk] [get_bd_pins clk_wiz_1/clk_100M] [get_bd_pins microblaze_0/Clk] [get_bd_pins microblaze_0_axi_intc/processor_clk] [get_bd_pins microblaze_0_axi_intc/s_axi_aclk] [get_bd_pins microblaze_0_axi_periph/ACLK] [get_bd_pins microblaze_0_axi_periph/M00_ACLK] [get_bd_pins microblaze_0_axi_periph/M01_ACLK] [get_bd_pins microblaze_0_axi_periph/M02_ACLK] [get_bd_pins microblaze_0_axi_periph/M03_ACLK] [get_bd_pins microblaze_0_axi_periph/S00_ACLK] [get_bd_pins microblaze_0_local_memory/LMB_Clk] [get_bd_pins rst_clk_wiz_1_100M/slowest_sync_clk] [get_bd_pins xadc_wiz_0/s_axi_aclk] [get_bd_pins xadc_wiz_0/s_axis_aclk]
+  connect_bd_net -net microblaze_0_Clk [get_bd_pins axi_timer_0/s_axi_aclk] [get_bd_pins axi_uartlite_0/s_axi_aclk] [get_bd_pins clk_wiz_1/clk_100M] [get_bd_pins microblaze_0/Clk] [get_bd_pins microblaze_0_axi_intc/processor_clk] [get_bd_pins microblaze_0_axi_intc/s_axi_aclk] [get_bd_pins microblaze_0_axi_periph/ACLK] [get_bd_pins microblaze_0_axi_periph/M00_ACLK] [get_bd_pins microblaze_0_axi_periph/M01_ACLK] [get_bd_pins microblaze_0_axi_periph/M02_ACLK] [get_bd_pins microblaze_0_axi_periph/M03_ACLK] [get_bd_pins microblaze_0_axi_periph/S00_ACLK] [get_bd_pins microblaze_0_local_memory/LMB_Clk] [get_bd_pins rst_clk_wiz_1_100M/slowest_sync_clk] [get_bd_pins system_ila_0/clk] [get_bd_pins xadc_wiz_0/s_axi_aclk] [get_bd_pins xadc_wiz_0/s_axis_aclk]
   connect_bd_net -net microblaze_0_intr [get_bd_pins microblaze_0_axi_intc/intr] [get_bd_pins microblaze_0_xlconcat/dout]
   connect_bd_net -net reset_1 [get_bd_ports reset] [get_bd_pins clk_wiz_1/reset] [get_bd_pins rst_clk_wiz_1_100M/ext_reset_in]
   connect_bd_net -net rst_clk_wiz_1_100M_bus_struct_reset [get_bd_pins microblaze_0_local_memory/SYS_Rst] [get_bd_pins rst_clk_wiz_1_100M/bus_struct_reset]
   connect_bd_net -net rst_clk_wiz_1_100M_mb_reset [get_bd_pins microblaze_0/Reset] [get_bd_pins microblaze_0_axi_intc/processor_rst] [get_bd_pins rst_clk_wiz_1_100M/mb_reset]
-  connect_bd_net -net rst_clk_wiz_1_100M_peripheral_aresetn [get_bd_pins axi_timer_0/s_axi_aresetn] [get_bd_pins axi_uartlite_0/s_axi_aresetn] [get_bd_pins microblaze_0_axi_intc/s_axi_aresetn] [get_bd_pins microblaze_0_axi_periph/ARESETN] [get_bd_pins microblaze_0_axi_periph/M00_ARESETN] [get_bd_pins microblaze_0_axi_periph/M01_ARESETN] [get_bd_pins microblaze_0_axi_periph/M02_ARESETN] [get_bd_pins microblaze_0_axi_periph/M03_ARESETN] [get_bd_pins microblaze_0_axi_periph/S00_ARESETN] [get_bd_pins rst_clk_wiz_1_100M/peripheral_aresetn] [get_bd_pins xadc_wiz_0/s_axi_aresetn]
+  connect_bd_net -net rst_clk_wiz_1_100M_peripheral_aresetn [get_bd_pins axi_timer_0/s_axi_aresetn] [get_bd_pins axi_uartlite_0/s_axi_aresetn] [get_bd_pins microblaze_0_axi_intc/s_axi_aresetn] [get_bd_pins microblaze_0_axi_periph/ARESETN] [get_bd_pins microblaze_0_axi_periph/M00_ARESETN] [get_bd_pins microblaze_0_axi_periph/M01_ARESETN] [get_bd_pins microblaze_0_axi_periph/M02_ARESETN] [get_bd_pins microblaze_0_axi_periph/M03_ARESETN] [get_bd_pins microblaze_0_axi_periph/S00_ARESETN] [get_bd_pins rst_clk_wiz_1_100M/peripheral_aresetn] [get_bd_pins system_ila_0/resetn] [get_bd_pins xadc_wiz_0/s_axi_aresetn]
   connect_bd_net -net sysclk_1 [get_bd_ports sysclk] [get_bd_pins clk_wiz_1/clk_in1]
+  connect_bd_net -net xadc_AD4N_aux4_1 [get_bd_ports xadc_AD4N] [get_bd_pins xadc_wiz_0/vauxn4]
+  connect_bd_net -net xadc_AD4P_1 [get_bd_ports xadc_AD4P] [get_bd_pins xadc_wiz_0/vauxp4]
 
   # Create address segments
   assign_bd_address -offset 0x41C00000 -range 0x00010000 -target_address_space [get_bd_addr_spaces microblaze_0/Data] [get_bd_addr_segs axi_timer_0/S_AXI/Reg] -force
