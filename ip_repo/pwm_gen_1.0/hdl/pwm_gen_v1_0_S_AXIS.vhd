@@ -10,7 +10,7 @@ entity pwm_gen_v1_0_S_AXIS is
 		-- Do not modify the parameters beyond this line
 
 		-- AXI4Stream sink: Data Width
-		C_S_AXIS_TDATA_WIDTH	: integer	:= 32
+		C_S_AXIS_TDATA_WIDTH	: integer	:= 16
 	);
 	port (
 		-- Users to add ports here

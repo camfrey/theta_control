@@ -15,7 +15,7 @@ entity pwm_gen_v1_0 is
 		C_S_AXI_ADDR_WIDTH	: integer	:= 7;
 
 		-- Parameters of Axi Slave Bus Interface S_AXIS
-		C_S_AXIS_TDATA_WIDTH	: integer	:= 32
+		C_S_AXIS_TDATA_WIDTH	: integer	:= 16
 	);
 	port (
 		-- Users to add ports here
@@ -93,7 +93,7 @@ architecture arch_imp of pwm_gen_v1_0 is
 
 	component pwm_gen_v1_0_S_AXIS is
 		generic (
-		C_S_AXIS_TDATA_WIDTH	: integer	:= 32
+		C_S_AXIS_TDATA_WIDTH	: integer	:= 16
 		);
 		port (
 		S_AXIS_ACLK	: in std_logic;
