@@ -169,7 +169,7 @@
       <spirit:parameters>
         <spirit:parameter>
           <spirit:name>WIZ_DATA_WIDTH</spirit:name>
-          <spirit:value spirit:format="long" spirit:id="BUSIFPARAM_VALUE.S_AXI.WIZ_DATA_WIDTH" spirit:choiceRef="choice_list_ea018de4">32</spirit:value>
+          <spirit:value spirit:format="long" spirit:id="BUSIFPARAM_VALUE.S_AXI.WIZ_DATA_WIDTH" spirit:choiceRef="choice_list_6fc15197">32</spirit:value>
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>WIZ_NUM_REG</spirit:name>
@@ -231,7 +231,7 @@
       <spirit:parameters>
         <spirit:parameter>
           <spirit:name>WIZ_DATA_WIDTH</spirit:name>
-          <spirit:value spirit:format="long" spirit:id="BUSIFPARAM_VALUE.S_AXIS.WIZ_DATA_WIDTH" spirit:choiceRef="choice_list_ea018de4">32</spirit:value>
+          <spirit:value spirit:format="long" spirit:id="BUSIFPARAM_VALUE.S_AXIS.WIZ_DATA_WIDTH" spirit:choiceRef="choice_list_6fc15197">32</spirit:value>
         </spirit:parameter>
       </spirit:parameters>
     </spirit:busInterface>
@@ -253,7 +253,7 @@
       <spirit:parameters>
         <spirit:parameter>
           <spirit:name>POLARITY</spirit:name>
-          <spirit:value spirit:id="BUSIFPARAM_VALUE.S_AXI_RST.POLARITY">ACTIVE_LOW</spirit:value>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.S_AXI_RST.POLARITY" spirit:choiceRef="choice_list_9d8b0d81">ACTIVE_LOW</spirit:value>
         </spirit:parameter>
       </spirit:parameters>
     </spirit:busInterface>
@@ -301,7 +301,7 @@
       <spirit:parameters>
         <spirit:parameter>
           <spirit:name>POLARITY</spirit:name>
-          <spirit:value spirit:id="BUSIFPARAM_VALUE.S_AXIS_RST.POLARITY">ACTIVE_LOW</spirit:value>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.S_AXIS_RST.POLARITY" spirit:choiceRef="choice_list_9d8b0d81">ACTIVE_LOW</spirit:value>
         </spirit:parameter>
       </spirit:parameters>
     </spirit:busInterface>
@@ -365,6 +365,12 @@
         <spirit:fileSetRef>
           <spirit:localName>xilinx_vhdlsynthesis_view_fileset</spirit:localName>
         </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>dc8c8fae</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
       </spirit:view>
       <spirit:view>
         <spirit:name>xilinx_vhdlbehavioralsimulation</spirit:name>
@@ -375,6 +381,12 @@
         <spirit:fileSetRef>
           <spirit:localName>xilinx_vhdlbehavioralsimulation_view_fileset</spirit:localName>
         </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>dc8c8fae</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
       </spirit:view>
       <spirit:view>
         <spirit:name>xilinx_softwaredriver</spirit:name>
@@ -383,6 +395,12 @@
         <spirit:fileSetRef>
           <spirit:localName>xilinx_softwaredriver_view_fileset</spirit:localName>
         </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>12e587f2</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
       </spirit:view>
       <spirit:view>
         <spirit:name>xilinx_xpgui</spirit:name>
@@ -391,6 +409,12 @@
         <spirit:fileSetRef>
           <spirit:localName>xilinx_xpgui_view_fileset</spirit:localName>
         </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>d4fe2b74</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
       </spirit:view>
       <spirit:view>
         <spirit:name>bd_tcl</spirit:name>
@@ -399,20 +423,65 @@
         <spirit:fileSetRef>
           <spirit:localName>bd_tcl_view_fileset</spirit:localName>
         </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>45a2f450</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
       </spirit:view>
     </spirit:views>
     <spirit:ports>
+      <spirit:port>
+        <spirit:name>PWM</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s_axi_aclk</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s_axi_aresetn</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
       <spirit:port>
         <spirit:name>s_axi_awaddr</spirit:name>
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ADDR_WIDTH&apos;))-1)">6</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ADDR_WIDTH&apos;)) - 1)">6</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -429,7 +498,7 @@
           </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -442,7 +511,7 @@
           <spirit:direction>in</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -455,7 +524,7 @@
           <spirit:direction>out</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -467,12 +536,12 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_DATA_WIDTH&apos;))-1)">31</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_DATA_WIDTH&apos;)) - 1)">31</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -484,12 +553,12 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_DATA_WIDTH&apos;))/8)-1)">3</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_DATA_WIDTH&apos;)) / 8) - 1)">3</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -502,7 +571,7 @@
           <spirit:direction>in</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -515,7 +584,7 @@
           <spirit:direction>out</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -532,7 +601,7 @@
           </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -545,7 +614,7 @@
           <spirit:direction>out</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -558,7 +627,7 @@
           <spirit:direction>in</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -570,12 +639,12 @@
         <spirit:wire>
           <spirit:direction>in</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ADDR_WIDTH&apos;))-1)">6</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_ADDR_WIDTH&apos;)) - 1)">6</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -592,7 +661,7 @@
           </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -605,7 +674,7 @@
           <spirit:direction>in</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -618,7 +687,7 @@
           <spirit:direction>out</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -630,12 +699,12 @@
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_DATA_WIDTH&apos;))-1)">31</spirit:left>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXI_DATA_WIDTH&apos;)) - 1)">31</spirit:left>
             <spirit:right spirit:format="long">0</spirit:right>
           </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -652,7 +721,7 @@
           </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -665,7 +734,7 @@
           <spirit:direction>out</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -678,106 +747,7 @@
           <spirit:direction>in</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
-              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>s_axi_aclk</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
-              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>s_axi_aresetn</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
-              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>s_axis_tdata</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
-          <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXIS_TDATA_WIDTH&apos;))-1)">31</spirit:left>
-            <spirit:right spirit:format="long">0</spirit:right>
-          </spirit:vector>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
-              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>s_axis_tstrb</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
-          <spirit:vector>
-            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXIS_TDATA_WIDTH&apos;))/8)-1)">3</spirit:left>
-            <spirit:right spirit:format="long">0</spirit:right>
-          </spirit:vector>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
-              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>s_axis_tlast</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
-              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>s_axis_tvalid</spirit:name>
-        <spirit:wire>
-          <spirit:direction>in</spirit:direction>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
-              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
-            </spirit:wireTypeDef>
-          </spirit:wireTypeDefs>
-        </spirit:wire>
-      </spirit:port>
-      <spirit:port>
-        <spirit:name>s_axis_tready</spirit:name>
-        <spirit:wire>
-          <spirit:direction>out</spirit:direction>
-          <spirit:wireTypeDefs>
-            <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -790,7 +760,7 @@
           <spirit:direction>in</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -803,7 +773,80 @@
           <spirit:direction>in</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>wire</spirit:typeName>
+              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s_axis_tready</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s_axis_tdata</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXIS_TDATA_WIDTH&apos;)) - 1)">15</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
+              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s_axis_tstrb</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="((spirit:decode(id(&apos;MODELPARAM_VALUE.C_S_AXIS_TDATA_WIDTH&apos;)) / 8) - 1)">1</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
+              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s_axis_tlast</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>s_axis_tvalid</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -828,14 +871,28 @@
         <spirit:name>C_S_AXIS_TDATA_WIDTH</spirit:name>
         <spirit:displayName>C S AXIS TDATA WIDTH</spirit:displayName>
         <spirit:description>AXI4Stream sink: Data Width</spirit:description>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXIS_TDATA_WIDTH" spirit:order="7" spirit:rangeType="long">32</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXIS_TDATA_WIDTH" spirit:order="7" spirit:rangeType="long">16</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_XADC_DATA_WIDTH</spirit:name>
+        <spirit:displayName>C Xadc Data Width</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_XADC_DATA_WIDTH">12</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
   <spirit:choices>
     <spirit:choice>
-      <spirit:name>choice_list_ea018de4</spirit:name>
+      <spirit:name>choice_list_6fc15197</spirit:name>
       <spirit:enumeration>32</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
+      <spirit:name>choice_list_9d8b0d81</spirit:name>
+      <spirit:enumeration>ACTIVE_HIGH</spirit:enumeration>
+      <spirit:enumeration>ACTIVE_LOW</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
+      <spirit:name>choice_list_af38333b</spirit:name>
+      <spirit:enumeration>16</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
       <spirit:name>choice_pairs_ce1226b1</spirit:name>
@@ -857,7 +914,7 @@
       <spirit:file>
         <spirit:name>hdl/pwm_gen_v1_0.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_5bdea208</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_c5cc3f66</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -912,7 +969,7 @@
       <spirit:file>
         <spirit:name>xgui/pwm_gen_v1_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_a7d089d3</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_d4fe2b74</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -930,7 +987,7 @@
       <spirit:name>C_S_AXI_DATA_WIDTH</spirit:name>
       <spirit:displayName>C S AXI DATA WIDTH</spirit:displayName>
       <spirit:description>Width of S_AXI data bus</spirit:description>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_S_AXI_DATA_WIDTH" spirit:choiceRef="choice_list_ea018de4" spirit:order="3">32</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_S_AXI_DATA_WIDTH" spirit:choiceRef="choice_list_6fc15197" spirit:order="3">32</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -980,7 +1037,7 @@
       <spirit:name>C_S_AXIS_TDATA_WIDTH</spirit:name>
       <spirit:displayName>C S AXIS TDATA WIDTH</spirit:displayName>
       <spirit:description>AXI4Stream sink: Data Width</spirit:description>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_S_AXIS_TDATA_WIDTH" spirit:choiceRef="choice_list_ea018de4" spirit:order="7">32</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_S_AXIS_TDATA_WIDTH" spirit:choiceRef="choice_list_af38333b" spirit:order="7">16</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -993,6 +1050,11 @@
       <spirit:name>Component_Name</spirit:name>
       <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.Component_Name" spirit:order="1">pwm_gen_v1_0</spirit:value>
     </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_XADC_DATA_WIDTH</spirit:name>
+      <spirit:displayName>C Xadc Data Width</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_XADC_DATA_WIDTH">12</spirit:value>
+    </spirit:parameter>
   </spirit:parameters>
   <spirit:vendorExtensions>
     <xilinx:coreExtensions>
@@ -1003,11 +1065,96 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>pwm_gen</xilinx:displayName>
-      <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2021-11-16T22:55:54Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>4</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2021-11-24T16:06:11Z</xilinx:coreCreationDateTime>
+      <xilinx:tags>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@65492827_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@42fbeb29_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@49cfd70a_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@620e138c_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@53262079_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@727d5ae1_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5977b74d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@82ab74_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@d6d37aa_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4a877d20_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3cc9f0e5_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@7ee6181_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@483ace73_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@31699d09_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1e3cf90e_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@54c485f5_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@61a0a4ba_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@98e8675_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@52c63084_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@46a3a0ad_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6a018ee7_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5856d756_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@79c45469_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@458853f0_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@17f0c03_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@399b83c4_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5f4f95d6_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@29b04a9e_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@499645f_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6255d5fe_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6fca7de5_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@41816f4e_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@872ac8d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@272c1032_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4a553234_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6920d440_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3b285752_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6f46c325_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@d907e94_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4bce0551_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4825f25d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@290dc37c_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@132100df_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@f81d4e2_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@31874c74_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@24420139_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5cb3ec10_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@51aadd95_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1ad1b0c7_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@25bb377a_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6722675c_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@12a1cedd_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5bf516d1_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@78ab6eeb_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1f34f2b1_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2585c7ac_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6d07223d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@74dc23fd_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@726f1c92_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6b2fc57_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@221e454f_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@23a4ed24_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5fd2bd1_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@72af4bc7_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6e9d6b27_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2126851_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@23e13a5d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3268e378_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@78f4aff3_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3860085a_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@74c93e6f_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@7bb90c7e_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@58ce311b_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3b94de3d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@53baa253_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@283b89fb_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2d9fc812_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+      </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2021.1</xilinx:xilinxVersion>
+      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="05778fc2"/>
+      <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="c30980da"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="d4067a9f"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="3f3c493c"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="1503b999"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="74ee094c"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>

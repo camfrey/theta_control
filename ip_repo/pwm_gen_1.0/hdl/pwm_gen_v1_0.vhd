@@ -2,10 +2,13 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+--Library xpm;
+--use xpm.vcomponents.all;
+
 entity pwm_gen_v1_0 is
 	generic (
-		-- Users to add parameters here
-
+		-- Users to add parameters name
+		C_XADC_DATA_WIDTH : integer := 12;
 		-- User parameters ends
 		-- Do not modify the parameters beyond this line
 
@@ -19,7 +22,8 @@ entity pwm_gen_v1_0 is
 	);
 	port (
 		-- Users to add ports here
-
+--		counter_clk : in std_logic;
+		PWM : out std_logic;
 		-- User ports ends
 		-- Do not modify the ports beyond this line
 
@@ -60,6 +64,10 @@ end pwm_gen_v1_0;
 
 architecture arch_imp of pwm_gen_v1_0 is
 
+--    signal duty_cycle_AXI_CLK : std_logic_vector(C_S_AXIS_TDATA_WIDTH - 1 downto 0);
+    signal duty_cycle : std_logic_vector(C_S_AXIS_TDATA_WIDTH - 1 downto 0);
+    signal duty_count : std_logic_vector(C_S_AXIS_TDATA_WIDTH - 1 downto 0);
+
 	-- component declaration
 	component pwm_gen_v1_0_S_AXI is
 		generic (
@@ -93,9 +101,11 @@ architecture arch_imp of pwm_gen_v1_0 is
 
 	component pwm_gen_v1_0_S_AXIS is
 		generic (
+		C_XADC_DATA_WIDTH : integer := 12;
 		C_S_AXIS_TDATA_WIDTH	: integer	:= 16
 		);
 		port (
+		duty_cycle : out std_logic_vector(C_S_AXIS_TDATA_WIDTH-1 downto 0);
 		S_AXIS_ACLK	: in std_logic;
 		S_AXIS_ARESETN	: in std_logic;
 		S_AXIS_TREADY	: out std_logic;
@@ -144,6 +154,7 @@ pwm_gen_v1_0_S_AXIS_inst : pwm_gen_v1_0_S_AXIS
 		C_S_AXIS_TDATA_WIDTH	=> C_S_AXIS_TDATA_WIDTH
 	)
 	port map (
+	    duty_cycle => duty_cycle,
 		S_AXIS_ACLK	=> s_axis_aclk,
 		S_AXIS_ARESETN	=> s_axis_aresetn,
 		S_AXIS_TREADY	=> s_axis_tready,
@@ -152,9 +163,39 @@ pwm_gen_v1_0_S_AXIS_inst : pwm_gen_v1_0_S_AXIS
 		S_AXIS_TLAST	=> s_axis_tlast,
 		S_AXIS_TVALID	=> s_axis_tvalid
 	);
+	
+--	xpm_cdc_array_single_inst : xpm_cdc_array_single
+--	generic map(
+--	   DEST_SYNC_FF => 4,
+--	   INIT_SYNC_FF => 0,
+--	   SIM_ASSERT_CHK => 0,
+--	   SRC_INPUT_REG => 1,
+--	   WIDTH => C_S_AXIS_TDATA_WIDTH
+--	)
+--	port map (
+--	   dest_out => duty_cycle,
+--	   dest_clk => counter_clk,
+--	   src_clk => s_axis_aclk,
+--	   src_in => duty_cycle_AXI_CLK
+--	);
 
 	-- Add user logic here
-
+    process (s_axis_aclk)
+    begin
+        if rising_edge(s_axis_aclk) then
+          if s_axis_aresetn = '0' then
+             duty_count <= (others => '0');
+             PWM <= '0';
+          else
+            duty_count <= std_logic_vector(unsigned(duty_count) + 1);
+            if (duty_count < duty_cycle) then
+                PWM <= '1';
+            else
+                PWM <= '0';
+            end if;
+          end if;
+        end if;
+    end process;
 	-- User logic ends
 
 end arch_imp;

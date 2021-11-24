@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 entity pwm_gen_v1_0_S_AXIS is
 	generic (
 		-- Users to add parameters here
-
+		C_XADC_DATA_WIDTH : integer := 12;
 		-- User parameters ends
 		-- Do not modify the parameters beyond this line
 
@@ -13,8 +13,8 @@ entity pwm_gen_v1_0_S_AXIS is
 		C_S_AXIS_TDATA_WIDTH	: integer	:= 16
 	);
 	port (
-		-- Users to add ports here
-
+		-- Users to add ports name
+		duty_cycle : out std_logic_vector(C_S_AXIS_TDATA_WIDTH-1 downto 0);
 		-- User ports ends
 		-- Do not modify the ports beyond this line
 
@@ -171,6 +171,14 @@ begin
 	end generate FIFO_GEN;
 
 	-- Add user logic here
+	process (S_AXIS_ACLK)
+	begin
+	   if (rising_edge(S_AXIS_ACLK)) then
+	       if ((S_AXIS_TVALID and axis_tready) = '1') then
+	           duty_cycle <= S_AXIS_TDATA;
+	       end if;
+	   end if;
+	end process;
 
 	-- User logic ends
 
