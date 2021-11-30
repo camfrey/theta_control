@@ -331,6 +331,44 @@
         </spirit:parameter>
       </spirit:parameters>
     </spirit:busInterface>
+    <spirit:busInterface>
+      <spirit:name>PWM_clk</spirit:name>
+      <spirit:busType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="clock" spirit:version="1.0"/>
+      <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="clock_rtl" spirit:version="1.0"/>
+      <spirit:slave/>
+      <spirit:portMaps>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>CLK</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>PWM_clk</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+      </spirit:portMaps>
+      <spirit:parameters>
+        <spirit:parameter>
+          <spirit:name>ASSOCIATED_RESET</spirit:name>
+          <spirit:value spirit:id="BUSIFPARAM_VALUE.PWM_CLK.ASSOCIATED_RESET">PWM_reset</spirit:value>
+        </spirit:parameter>
+      </spirit:parameters>
+    </spirit:busInterface>
+    <spirit:busInterface>
+      <spirit:name>PWM_reset</spirit:name>
+      <spirit:busType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="reset" spirit:version="1.0"/>
+      <spirit:abstractionType spirit:vendor="xilinx.com" spirit:library="signal" spirit:name="reset_rtl" spirit:version="1.0"/>
+      <spirit:slave/>
+      <spirit:portMaps>
+        <spirit:portMap>
+          <spirit:logicalPort>
+            <spirit:name>RST</spirit:name>
+          </spirit:logicalPort>
+          <spirit:physicalPort>
+            <spirit:name>PWM_reset</spirit:name>
+          </spirit:physicalPort>
+        </spirit:portMap>
+      </spirit:portMaps>
+    </spirit:busInterface>
   </spirit:busInterfaces>
   <spirit:memoryMaps>
     <spirit:memoryMap>
@@ -368,7 +406,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>dc8c8fae</spirit:value>
+            <spirit:value>d68eba72</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -384,7 +422,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>dc8c8fae</spirit:value>
+            <spirit:value>d68eba72</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -412,7 +450,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>d4fe2b74</spirit:value>
+            <spirit:value>08f795f7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -433,9 +471,35 @@
     </spirit:views>
     <spirit:ports>
       <spirit:port>
+        <spirit:name>PWM_clk</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
         <spirit:name>PWM</spirit:name>
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
+              <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>PWM_reset</spirit:name>
+        <spirit:wire>
+          <spirit:direction>in</spirit:direction>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
               <spirit:typeName>std_logic</spirit:typeName>
@@ -874,9 +938,9 @@
         <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_S_AXIS_TDATA_WIDTH" spirit:order="7" spirit:rangeType="long">16</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
-        <spirit:name>C_XADC_DATA_WIDTH</spirit:name>
-        <spirit:displayName>C Xadc Data Width</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_XADC_DATA_WIDTH">12</spirit:value>
+        <spirit:name>C_PWM_COUNTER_WIDTH</spirit:name>
+        <spirit:displayName>C Pwm Counter Width</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_PWM_COUNTER_WIDTH">11</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -914,7 +978,7 @@
       <spirit:file>
         <spirit:name>hdl/pwm_gen_v1_0.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_c5cc3f66</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_4a299c2a</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -969,7 +1033,7 @@
       <spirit:file>
         <spirit:name>xgui/pwm_gen_v1_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_d4fe2b74</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_08f795f7</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -1051,9 +1115,9 @@
       <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.Component_Name" spirit:order="1">pwm_gen_v1_0</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
-      <spirit:name>C_XADC_DATA_WIDTH</spirit:name>
-      <spirit:displayName>C Xadc Data Width</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_XADC_DATA_WIDTH">12</spirit:value>
+      <spirit:name>C_PWM_COUNTER_WIDTH</spirit:name>
+      <spirit:displayName>C Pwm Counter Width</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_PWM_COUNTER_WIDTH">11</spirit:value>
     </spirit:parameter>
   </spirit:parameters>
   <spirit:vendorExtensions>
@@ -1065,8 +1129,11 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>pwm_gen</xilinx:displayName>
-      <xilinx:coreRevision>4</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2021-11-24T16:06:11Z</xilinx:coreCreationDateTime>
+      <xilinx:xpmLibraries>
+        <xilinx:xpmLibrary>XPM_CDC</xilinx:xpmLibrary>
+      </xilinx:xpmLibraries>
+      <xilinx:coreRevision>6</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2021-11-26T19:49:58Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="ui.data.coregen.df@65492827_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.df@42fbeb29_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
@@ -1145,16 +1212,41 @@
         <xilinx:tag xilinx:name="ui.data.coregen.df@53baa253_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.df@283b89fb_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.df@2d9fc812_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3b7ec3f2_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2b209c3a_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2f5b5feb_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1831c857_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2d726fcf_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2d940119_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@502a3324_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6fda5ac0_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2c6e6170_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@574d4480_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4d6c78d0_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5d77b464_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@10631870_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3ace0c63_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5e05965f_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@60498f87_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@760af9a1_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@639df8d8_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@723cac1c_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@40baec40_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@29bcde45_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3fa031a_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@15765f01_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@66563517_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@60139550_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2021.1</xilinx:xilinxVersion>
-      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="05778fc2"/>
+      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="baad3ad8"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="c30980da"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="d4067a9f"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="3f3c493c"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="1503b999"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="74ee094c"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="85b99eb1"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="d6f2ef3c"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="ec7626ce"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="f1eb9ca8"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>

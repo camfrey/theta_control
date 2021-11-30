@@ -12,12 +12,12 @@ proc init_gui { IPINST } {
 
 }
 
-proc update_PARAM_VALUE.C_XADC_DATA_WIDTH { PARAM_VALUE.C_XADC_DATA_WIDTH } {
-	# Procedure called to update C_XADC_DATA_WIDTH when any of the dependent parameters in the arguments change
+proc update_PARAM_VALUE.C_PWM_COUNTER_WIDTH { PARAM_VALUE.C_PWM_COUNTER_WIDTH } {
+	# Procedure called to update C_PWM_COUNTER_WIDTH when any of the dependent parameters in the arguments change
 }
 
-proc validate_PARAM_VALUE.C_XADC_DATA_WIDTH { PARAM_VALUE.C_XADC_DATA_WIDTH } {
-	# Procedure called to validate C_XADC_DATA_WIDTH
+proc validate_PARAM_VALUE.C_PWM_COUNTER_WIDTH { PARAM_VALUE.C_PWM_COUNTER_WIDTH } {
+	# Procedure called to validate C_PWM_COUNTER_WIDTH
 	return true
 }
 
@@ -82,8 +82,8 @@ proc update_MODELPARAM_VALUE.C_S_AXIS_TDATA_WIDTH { MODELPARAM_VALUE.C_S_AXIS_TD
 	set_property value [get_property value ${PARAM_VALUE.C_S_AXIS_TDATA_WIDTH}] ${MODELPARAM_VALUE.C_S_AXIS_TDATA_WIDTH}
 }
 
-proc update_MODELPARAM_VALUE.C_XADC_DATA_WIDTH { MODELPARAM_VALUE.C_XADC_DATA_WIDTH PARAM_VALUE.C_XADC_DATA_WIDTH } {
+proc update_MODELPARAM_VALUE.C_PWM_COUNTER_WIDTH { MODELPARAM_VALUE.C_PWM_COUNTER_WIDTH PARAM_VALUE.C_PWM_COUNTER_WIDTH } {
 	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
-	set_property value [get_property value ${PARAM_VALUE.C_XADC_DATA_WIDTH}] ${MODELPARAM_VALUE.C_XADC_DATA_WIDTH}
+	set_property value [get_property value ${PARAM_VALUE.C_PWM_COUNTER_WIDTH}] ${MODELPARAM_VALUE.C_PWM_COUNTER_WIDTH}
 }
 
