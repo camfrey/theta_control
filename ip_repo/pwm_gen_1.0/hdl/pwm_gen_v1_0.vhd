@@ -189,7 +189,7 @@ pwm_gen_v1_0_S_AXIS_inst : pwm_gen_v1_0_S_AXIS
              PWM <= '0';
           else
             duty_count <= std_logic_vector(unsigned(duty_count) + 1);
-            if (duty_count < duty_cycle(C_PWM_COUNTER_WIDTH - 1 downto 0)) then
+            if (duty_count < duty_cycle(C_S_AXIS_TDATA_WIDTH - 1 downto 5)) then
                 PWM <= '1';
             else
                 PWM <= '0';
