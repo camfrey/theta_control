@@ -36,6 +36,7 @@
 #include "xintc.h"
 #include "xil_printf.h"
 #include "phase_calc.h"
+//#include "print_functions.h" // for some reason get duplicate error
 
 /************************** Constant Definitions *****************************/
 /*
@@ -88,6 +89,14 @@ static XSysMon SysMonInst; 	  /* System Monitor driver instance */
 *
 	Status=  XSysMon_SetSingleChParams(SysMonInstPtr, XSM_CH_AUX_MIN+3,
 ******************************************************************************/
+
+const double phase_Min=-18.36089378;
+const double phase_Max=18.36089378;
+
+const double pwm_Min=0;
+const double pwm_Max=pow(2,11);
+
+
 int main(void)
 {
 	int Status;
@@ -102,13 +111,40 @@ int main(void)
  * Phase Testing Stuff
  */
 
-int pos_x[]={0,8.1,16.2,24.3,32.4,40.5,48.6,56.7,64.8};
+double pos_x[]={-0.0567,-0.0405,-0.0243,-0.0081,0.0081,0.0243,0.0405,0.0567}; // position of each array column (in mm)
 
-printf("Size: %d",sizeof pos_x); //debug
-//int phase_result[sizeof *pos_x];
-//phase_result=phase_resultcalcPhase(pos_x,10);
+int pos_x_size = (sizeof pos_x/sizeof pos_x[0]);
+
+xil_printf("Size: %d\n", pos_x_size); //debug
+
+double phase_result[pos_x_size]; // Array of the phase calculation for each element
+
+double pwm_result[pos_x_size]; // Array of the element values converted from phase to PWM
+
+double desired_angle=10; // angle to steer the beam
 
 
+memset(phase_result, 0.0, sizeof phase_result); // initializing all elements in phase_result to 0
+
+
+calcPhase(&pos_x,&phase_result,pos_x_size,desired_angle); // calculate the phases for each array element
+
+
+for(int i =0; i<pos_x_size;i++){ // debug to make sure phase calculations are being calculated and assigned correctly
+	xil_printf("Phase element %d: ",i);
+	print_float(phase_result[i]);
+	xil_printf("\n");
+}
+
+for(int i=0;i<pos_x_size;i++){ // Map phase caluculations to PWM range (0-2^11)
+pwm_result[i]=mapToPWM(phase_result[i],phase_Min,phase_Max,pwm_Min,pwm_Max);
+}
+
+for(int i =0; i<pos_x_size;i++){ // debug to make sure pwm calculations are being calculated and assigned correctly
+	xil_printf("PWM element %d: ",i);
+	print_float(pwm_result[i]);
+	xil_printf("\n");
+}
 
 	while(1){
 //		u16 adcData = 0;
@@ -119,6 +155,7 @@ printf("Size: %d",sizeof pos_x); //debug
 	//xil_printf("Successfully ran Tmrctr PWM Example\r\n");
 	return XST_SUCCESS;
 }
+
 
 /****************************************************************************/
 /**

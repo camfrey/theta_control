@@ -1,7 +1,12 @@
 // Header file for phase_calc.c
-#include "phase_calc.c" // C filename
+//#include "phase_calc.c" // C filename
 
 //Prototypes
-float * calcPhase(float[], float);
+void calcPhase(double*,double*,int, double);
 
-float getPhase(float, float);
+double getPhase(double, double);
+
+double mapToPWM(double, double,double,double,double);
+
+void print_float(float);
+void print_double(double);
