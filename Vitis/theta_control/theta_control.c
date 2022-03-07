@@ -90,8 +90,8 @@ static XSysMon SysMonInst; 	  /* System Monitor driver instance */
 	Status=  XSysMon_SetSingleChParams(SysMonInstPtr, XSM_CH_AUX_MIN+3,
 ******************************************************************************/
 
-const double phase_Min=-18.36089378;
-const double phase_Max=18.36089378;
+const double phase_Min=-18.36089378; // Min phase angle of the left most element at (45 degrees)
+const double phase_Max=18.36089378; // Max phase angle of the right most element at (45 degrees)
 
 const double pwm_Min=0;
 const double pwm_Max=pow(2,11);
@@ -140,7 +140,7 @@ for(int i=0;i<pos_x_size;i++){ // Map phase caluculations to PWM range (0-2^11)
 pwm_result[i]=mapToPWM(phase_result[i],phase_Min,phase_Max,pwm_Min,pwm_Max);
 }
 
-for(int i =0; i<pos_x_size;i++){ // debug to make sure pwm calculations are being calculated and assigned correctly
+for(int i =0; i<pos_x_size;i++){ // debug to make sure PWM calculations are being calculated and assigned correctly
 	xil_printf("PWM element %d: ",i);
 	print_float(pwm_result[i]);
 	xil_printf("\n");
