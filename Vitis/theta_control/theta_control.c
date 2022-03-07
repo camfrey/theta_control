@@ -35,6 +35,7 @@
 #include "xsysmon.h"
 #include "xintc.h"
 #include "xil_printf.h"
+#include "phase_calc.h"
 
 /************************** Constant Definitions *****************************/
 /*
@@ -97,6 +98,17 @@ int main(void)
 		xil_printf("Tmrctr PWM Example Failed\r\n");
 		return XST_FAILURE;
 	}
+/*
+ * Phase Testing Stuff
+ */
+
+int pos_x[]={0,8.1,16.2,24.3,32.4,40.5,48.6,56.7,64.8};
+
+printf("Size: %d",sizeof pos_x); //debug
+//int phase_result[sizeof *pos_x];
+//phase_result=phase_resultcalcPhase(pos_x,10);
+
+
 
 	while(1){
 //		u16 adcData = 0;
