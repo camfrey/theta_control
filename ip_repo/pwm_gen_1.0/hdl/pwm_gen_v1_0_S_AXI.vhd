@@ -2,9 +2,13 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+library theta_control_lib;
+use theta_control_lib.theta_control_pkg.all;
+
 entity pwm_gen_v1_0_S_AXI is
 	generic (
 		-- Users to add parameters here
+		C_NUM_CHANNELS : natural := 8;
 
 		-- User parameters ends
 		-- Do not modify the parameters beyond this line
@@ -16,6 +20,7 @@ entity pwm_gen_v1_0_S_AXI is
 	);
 	port (
 		-- Users to add ports here
+		phase_array : out phase_arr(C_NUM_CHANNELS -1 downto 0);
 
 		-- User ports ends
 		-- Do not modify the ports beyond this line
@@ -157,6 +162,17 @@ begin
 	S_AXI_RDATA	<= axi_rdata;
 	S_AXI_RRESP	<= axi_rresp;
 	S_AXI_RVALID	<= axi_rvalid;
+	
+    phase_array(0) <= slv_reg0;
+    phase_array(1) <= slv_reg1;
+    phase_array(2) <= slv_reg2; 
+    phase_array(3) <= slv_reg3;
+    phase_array(4) <= slv_reg4;
+    phase_array(5) <= slv_reg5; 
+    phase_array(6) <= slv_reg6; 
+    phase_array(7) <= slv_reg7; 
+	
+
 	-- Implement axi_awready generation
 	-- axi_awready is asserted for one S_AXI_ACLK clock cycle when both
 	-- S_AXI_AWVALID and S_AXI_WVALID are asserted. axi_awready is
@@ -749,7 +765,8 @@ begin
 
 
 	-- Add user logic here
-	
+
+
 	-- User logic ends
 
 end arch_imp;

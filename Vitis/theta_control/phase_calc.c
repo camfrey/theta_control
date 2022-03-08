@@ -60,10 +60,14 @@ double getPhase(double pos_x, double angle ){
  *
  * return: phase which is the calculated
  */
+
 	float radians=(angle*M_PI)/180; // converting angle to radians
-	double phase=(2*M_PI*pos_x*sin(radians))/(343/25E3);
-	print_float(phase);
-	xil_printf(" - This is the element phase calculation\n");
+	if(radians<0){ // handle negative angles
+	radians+=2*M_PI;
+	}
+	double phase=(double)(2*M_PI*pos_x*sin(radians))/(double)(343/25E3);
+//	print_float(phase);
+//	xil_printf(" - This is the element phase calculation\n");
 	return phase;
 }
 
