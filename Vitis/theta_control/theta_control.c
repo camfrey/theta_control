@@ -35,6 +35,7 @@
 #include "xsysmon.h"
 #include "xintc.h"
 #include "xil_printf.h"
+#include "pwm_gen.h"
 
 /************************** Constant Definitions *****************************/
 /*
@@ -99,9 +100,14 @@ int main(void)
 	}
 
 	while(1){
-//		u16 adcData = 0;
-//		adcData = XSysMon_GetAdcData(&SysMonInst,XSM_CH_AUX_MIN + 4);
-//		xil_printf("%u\r\n",(adcData >> 4) & 0xFFF);
+		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG0_OFFSET,0);
+		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG1_OFFSET,250);
+		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG2_OFFSET,500);
+		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG3_OFFSET,750);
+		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG4_OFFSET,1000);
+		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG5_OFFSET,1250);
+		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG6_OFFSET,1500);
+		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG7_OFFSET,1750);
 	}
 
 	//xil_printf("Successfully ran Tmrctr PWM Example\r\n");
