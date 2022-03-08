@@ -121,7 +121,7 @@ double phase_result[pos_x_size]; // Array of the phase calculation for each elem
 
 double pwm_result[pos_x_size]; // Array of the element values converted from phase to PWM
 
-double desired_angle=10; // angle to steer the beam
+double desired_angle=-35; // angle to steer the beam
 
 
 memset(phase_result, 0.0, sizeof phase_result); // initializing all elements in phase_result to 0
