@@ -35,12 +35,9 @@
 #include "xsysmon.h"
 #include "xintc.h"
 #include "xil_printf.h"
-<<<<<<< HEAD
 #include "phase_calc.h"
 //#include "print_functions.h" // for some reason get duplicate error
-=======
 #include "pwm_gen.h"
->>>>>>> origin/working
 
 /************************** Constant Definitions *****************************/
 /*
