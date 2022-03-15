@@ -1,43 +1,17 @@
-/******************************************************************************
-* Copyright (C) 2018 - 2020 Xilinx, Inc.  All rights reserved.
-* SPDX-License-Identifier: MIT
-******************************************************************************/
-
-/*****************************************************************************/
-/**
-* @file  xtmrctr_pwm_example.c
-*
-* This file contains a design example using the timer counter driver
-* and hardware device using interrupt mode. The example demonstrates
-* the use of PWM feature of axi timers. PWM is configured to operate at specific
-* duty cycle and after every N cycles the duty cycle is incremented until a
-* specific duty cycle is achieved. No software validation of duty cycle is
-* undergone in the example.
-*
-* This example assumes that the interrupt controller is also present as a part
-* of the system.
-*
-*
-*
-*
-* <pre>
-* MODIFICATION HISTORY:
-*
-* Ver   Who  Date	 Changes
-* ----- ---- -------- -----------------------------------------------
-* 1.00b cjp  03/28/18 First release
-*</pre>
-******************************************************************************/
-
 /***************************** Include Files *********************************/
 #include "xparameters.h"
-#include "xil_exception.h"
 #include "xsysmon.h"
+<<<<<<< HEAD
 #include "xintc.h"
 #include "xil_printf.h"
 #include "phase_calc.h"
 //#include "print_functions.h" // for some reason get duplicate error
+=======
+#include "xil_io.h"
+>>>>>>> origin/working
 #include "pwm_gen.h"
+#include "xgpio.h"
+#include "sleep.h"
 
 /************************** Constant Definitions *****************************/
 /*
@@ -45,25 +19,9 @@
  * xparameters.h file. They are only defined here such that a user can easily
  * change all the needed parameters in one place.
  */
-#ifndef TESTAPP_GEN
 #define SYSMON_DEVICE_ID	XPAR_SYSMON_0_DEVICE_ID
-#endif
-
-#ifdef XPAR_INTC_0_DEVICE_ID	/* Interrupt Controller */
-#define INTC_DEVICE_ID		XPAR_INTC_0_DEVICE_ID
-#define INTR_ID			XPAR_INTC_0_SYSMON_0_VEC_ID
-#else	/* SCUGIC Interrupt Controller */
-#define INTC_DEVICE_ID		XPAR_SCUGIC_SINGLE_DEVICE_ID
-#define INTR_ID		XPAR_FABRIC_SYSTEM_MANAGEMENT_WIZ_0_IP2INTC_IRPT_INTR
-#endif /* XPAR_INTC_0_DEVICE_ID */
-
-#ifdef XPAR_INTC_0_DEVICE_ID
-#define INTC		XIntc
-#define INTC_HANDLER	XIntc_InterruptHandler
-#else
-#define INTC		XScuGic
-#define INTC_HANDLER	XScuGic_InterruptHandler
-#endif
+#define GPIO_OUTPUT_BANK	2
+#define GPIO_INPUT_BANK		1
 
 /**************************** Type Definitions *******************************/
 
@@ -75,6 +33,7 @@ int XADCInit(XSysMon* SysMonInstPtr, u16 SysMonDeviceId);
 
 /************************** Variable Definitions *****************************/
 static XSysMon SysMonInst; 	  /* System Monitor driver instance */
+static XGpio gpio;
 
 
 /*****************************************************************************/
@@ -103,6 +62,7 @@ int main(void)
 	int Status;
 
 	Status = XADCInit(&SysMonInst,SYSMON_DEVICE_ID);
+
 
 	if (Status != XST_SUCCESS) {
 		xil_printf("Tmrctr PWM Example Failed\r\n");
@@ -147,15 +107,32 @@ for(int i =0; i<pos_x_size;i++){ // debug to make sure PWM calculations are bein
 	xil_printf("\n");
 }
 
+	Status = XGpio_Initialize(&gpio, XPAR_AXI_GPIO_0_DEVICE_ID);
+
+	if (Status != XST_SUCCESS) {
+		xil_printf("Tmrctr PWM Example Failed\r\n");
+		return XST_FAILURE;
+	}
+
+	xil_printf("Hello World\n");
+
+	XGpio_SetDataDirection(&gpio,GPIO_INPUT_BANK,0x1F);
+	XGpio_SetDataDirection(&gpio,GPIO_OUTPUT_BANK,0x0);
+
+	PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG0_OFFSET,0);
+	PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG1_OFFSET,250);
+	PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG2_OFFSET,500);
+	PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG3_OFFSET,750);
+	PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG4_OFFSET,1000);
+	PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG5_OFFSET,1250);
+	PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG6_OFFSET,1500);
+	PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG7_OFFSET,1750);
+
 	while(1){
-		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG0_OFFSET,0);
-		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG1_OFFSET,250);
-		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG2_OFFSET,500);
-		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG3_OFFSET,750);
-		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG4_OFFSET,1000);
-		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG5_OFFSET,1250);
-		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG6_OFFSET,1500);
-		PWM_GEN_mWriteReg(XPAR_PWM_GEN_0_S_AXI_BASEADDR,PWM_GEN_S_AXI_SLV_REG7_OFFSET,1750);
+		XGpio_DiscreteWrite(&gpio,GPIO_OUTPUT_BANK,0x1F);
+		sleep(1);
+		XGpio_DiscreteWrite(&gpio,GPIO_OUTPUT_BANK,0x0);
+		sleep(1);
 	}
 
 	//xil_printf("Successfully ran Tmrctr PWM Example\r\n");
