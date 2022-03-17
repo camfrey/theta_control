@@ -56,7 +56,8 @@ const double phase_Min = -18.36089378; // Min phase angle of the left most eleme
 const double phase_Max = 18.36089378; // Max phase angle of the right most element at (45 degrees)
 const double pwm_Min = 0;
 const double pwm_Max = pow(2, 11);
-
+double pos_offset[] = {-2.111848395,1.064650844,1.361356817,-1.8675023,-0.523598776,-1.745329252,-1.396263402,1.134464014};
+//double pos_offset[] = {0,0,0,0,0,0,0,0};
 enum Mode {
 	Display, New_Angle, Beam_Mode
 };
@@ -110,12 +111,10 @@ int main(void) {
 	int Status;
 	double pos_x[] = { -0.0567, -0.0405, -0.0243, -0.0081, 0.0081, 0.0243,
 			0.0405, 0.0567 }; // position of each array column (in mm)
-	double pos_offset[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+
 
 	int pos_x_size = (sizeof pos_x / sizeof pos_x[0]); // size of position array
-	for (int i = 0; i < pos_x_size; i++) { // add offset to position array
-		pos_x[i] = pos_x[i] + pos_offset[i];
-	}
+
 	double phase_result[pos_x_size]; // Array of the phase calculation for each element
 	int pwm_result[pos_x_size]; // Array of the element values converted from phase to PWM
 	double desired_angle = 0; // angle to steer the beam
@@ -336,10 +335,12 @@ void displayInfo(double *phase_result, int *pwm_result, int pos_x_size,
 
 void updatePhase(double *phase_result, int *pwm_result, int pos_x_size,
 		double *pos_x, double *desired_angle) {
-	calcPhase(pos_x, phase_result, pos_x_size, desired_angle); // calculate the phases for each array element
+	calcPhase(pos_x, phase_result, pos_x_size, desired_angle,pos_offset); // calculate the phases for each array element
+
 	for (int i = 0; i < pos_x_size; i++) { // Map phase caluculations to PWM range (0-2^11)
 		pwm_result[i] = mapToPWM(phase_result[i]);
 	}
+
 	programPWM(pwm_result[0], pwm_result[1], pwm_result[2], pwm_result[3], pwm_result[4],
 			pwm_result[5], pwm_result[6], pwm_result[7]);
 }

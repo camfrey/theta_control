@@ -51,7 +51,7 @@ void print_double(double Input)
 }
 
 
-double getPhase(double pos_x, double angle ){
+double getPhase(double pos_x, double angle,double offset ){
 /*
  * Calculates phase for one specific position
  *
@@ -64,6 +64,7 @@ double getPhase(double pos_x, double angle ){
 	float radians=(angle*M_PI)/180.00; // converting angle to radians
 
 	double phase=(double)(2*M_PI*pos_x*sin(radians))/(double)(343.00/(40.00E3));
+	phase+=offset; //apply offset
 	if(phase/(2*M_PI)>1 || phase/(2*M_PI)<-1){
 		phase=phase-((2*M_PI)*floor(phase/(2*M_PI)));
 	}
@@ -74,7 +75,7 @@ double getPhase(double pos_x, double angle ){
 	return phase;
 }
 
-void calcPhase(double *pos_arr,double *phase_arr,int arr_size,double *angle){
+void calcPhase(double *pos_arr,double *phase_arr,int arr_size,double *angle,double *offset_arr){
 	/*
 	 * Calculates the phase for a set of the transducers
 	 *
@@ -88,7 +89,7 @@ void calcPhase(double *pos_arr,double *phase_arr,int arr_size,double *angle){
 	//xil_printf("pos array size %d\nAngle set: %d degrees\n",pos_size,(int)angle);  // debug
 
 	for(int i=0; i < pos_size; i++){
-		phase_arr[i]=getPhase(pos_arr[i],*angle);
+		phase_arr[i]=getPhase(pos_arr[i],*angle,offset_arr[i]);
 	}
 }
 
