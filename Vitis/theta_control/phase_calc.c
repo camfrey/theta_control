@@ -9,11 +9,11 @@ const float beam_freq = 25E3; // Transducer Resonant Frequency
 const int lambda = v_sound / beam_freq;
 
 
-double mapToPWM(double num, double in_min,double in_max,double out_min,double out_max){
+int mapToPWM(double num){
 	/*
 	 * Mapping function to convert calculated phase angle into PWM width
 	 */
-	return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+	return 2048*(num/(2*M_PI));
 }
 
 
@@ -61,17 +61,20 @@ double getPhase(double pos_x, double angle ){
  * return: phase which is the calculated
  */
 
-	float radians=(angle*M_PI)/180; // converting angle to radians
-	if(radians<0){ // handle negative angles
-	radians+=2*M_PI;
+	float radians=(angle*M_PI)/180.00; // converting angle to radians
+
+	double phase=(double)(2*M_PI*pos_x*sin(radians))/(double)(343.00/(40.00E3));
+	if(phase/(2*M_PI)>1 || phase/(2*M_PI)<-1){
+		phase=phase-((2*M_PI)*floor(phase/(2*M_PI)));
 	}
-	double phase=(double)(2*M_PI*pos_x*sin(radians))/(double)(343/25E3);
-//	print_float(phase);
-//	xil_printf(" - This is the element phase calculation\n");
+	if(phase<0){ // handle negative angles
+
+		phase+=2*M_PI;
+	}
 	return phase;
 }
 
-void calcPhase(double *pos_arr,double *phase_arr,int arr_size,double angle){
+void calcPhase(double *pos_arr,double *phase_arr,int arr_size,double *angle){
 	/*
 	 * Calculates the phase for a set of the transducers
 	 *
@@ -82,10 +85,10 @@ void calcPhase(double *pos_arr,double *phase_arr,int arr_size,double angle){
 	 *@return: Nothing
 	 */
 	int pos_size = arr_size; // size of position array
-	xil_printf("pos array size %d\nAngle set: %d degrees\n",pos_size,(int)angle);  // debug
+	//xil_printf("pos array size %d\nAngle set: %d degrees\n",pos_size,(int)angle);  // debug
 
 	for(int i=0; i < pos_size; i++){
-		phase_arr[i]=getPhase(pos_arr[i],angle);
+		phase_arr[i]=getPhase(pos_arr[i],*angle);
 	}
 }
 
