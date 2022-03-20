@@ -9,7 +9,6 @@
 #include "pwm_gen.h"
 #include "xgpio.h"
 #include "sleep.h"
-//#include "ctype.h"
 #include "string.h"
 #include "stdlib.h"
 #include "stdio.h"
@@ -56,7 +55,8 @@ const double phase_Min = -18.36089378; // Min phase angle of the left most eleme
 const double phase_Max = 18.36089378; // Max phase angle of the right most element at (45 degrees)
 const double pwm_Min = 0;
 const double pwm_Max = pow(2, 11);
-double pos_offset[] = {-2.111848395,1.064650844,1.361356817,-1.8675023,-0.523598776,-1.745329252,-1.396263402,1.134464014};
+double phase_offset[] = { -2.111848395, 1.064650844, 1.361356817, -1.8675023,
+		-0.523598776, -1.745329252, -1.396263402, -1.466076572 };
 //double pos_offset[] = {0,0,0,0,0,0,0,0};
 enum Mode {
 	Display, New_Angle, Beam_Mode
@@ -103,15 +103,14 @@ enum Mode {
 #define BACKGROUND_COL_CYAN             "46"
 #define BACKGROUND_COL_WHITE            "47"
 
-#define SHELL_COLOR_ESCAPE_SEQ(X) "\x1b['X'm"
-#define SHELL_FORMAT_RESET  ANSI_COLOR_ESCAPE_SEQ(GEN_FORMAT_RESET)
+#define SHELL_COLOR_ESCAPE_SEQ(X) "\x1b["X"m"
+#define SHELL_FORMAT_RESET  "\x1b[0m"
 
 int main(void) {
 
 	int Status;
 	double pos_x[] = { -0.0567, -0.0405, -0.0243, -0.0081, 0.0081, 0.0243,
 			0.0405, 0.0567 }; // position of each array column (in mm)
-
 
 	int pos_x_size = (sizeof pos_x / sizeof pos_x[0]); // size of position array
 
@@ -165,10 +164,9 @@ int main(void) {
 }
 
 void printWelcome() {
+
 	xil_printf(
-			"================================================================================\r\n\r\n");
-	xil_printf(
-			"                                @@@@@@@@@@@@@@@@@@                              \r\n");
+			SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"                                @@@@@@@@@@@@@@@@@@                              \r\n");
 	xil_printf(
 			"                         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                        \r\n");
 	xil_printf(
@@ -188,25 +186,25 @@ void printWelcome() {
 	xil_printf(
 			"        @@@@@@@@@@@                                          #@@@@@@@@@@@       \r\n");
 	xil_printf(
-			"       @@@@@@@@@@@@         @@                     @@         @@@@@@@@@@@&      \r\n");
+			"       @@@@@@@@@@@@         "SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"@@                     @@"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"         @@@@@@@@@@@&      \r\n");
 	xil_printf(
-			"       @@@@@@@@@@@          @@@                   @@@         @@@@@@@@@@@@      \r\n");
+			"       @@@@@@@@@@@          "SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"@@@                   @@@"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"         @@@@@@@@@@@@      \r\n");
 	xil_printf(
-			"      &@@@@@@@@@@@          @@@@@               @@@@@          @@@@@@@@@@@.     \r\n");
+			"      &@@@@@@@@@@@          "SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"@@@@@               @@@@@"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"          @@@@@@@@@@@.     \r\n");
 	xil_printf(
-			"      @@@@@@@@@@@@          @@@@@@@@@@@@@@@@@@@@@@@@@          @@@@@@@@@@@@     \r\n");
+			"      @@@@@@@@@@@@          "SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"@@@@@@@@@@@@@@@@@@@@@@@@@"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"          @@@@@@@@@@@@     \r\n");
 	xil_printf(
-			"      @@@@@@@@@@@@          @@@@@@@@@@@@@@@@@@@@@@@@@          @@@@@@@@@@@@     \r\n");
+			"      @@@@@@@@@@@@          "SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"@@@@@@@@@@@@@@@@@@@@@@@@@"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"          @@@@@@@@@@@@     \r\n");
 	xil_printf(
-			"      @@@@@@@@@@@@          @@@@@@@@@@@@@@@@@@@@@@@@@          @@@@@@@@@@@@     \r\n");
+			"      @@@@@@@@@@@@          "SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"@@@@@@@@@@@@@@@@@@@@@@@@@"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"          @@@@@@@@@@@@     \r\n");
 	xil_printf(
-			"      @@@@@@@@@@@@          @@@@@@@@@@@@@@@@@@@@@@@@@          @@@@@@@@@@@*     \r\n");
+			"      @@@@@@@@@@@@          "SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"@@@@@@@@@@@@@@@@@@@@@@@@@"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"          @@@@@@@@@@@*     \r\n");
 	xil_printf(
-			"       @@@@@@@@@@@          @@@                   @@@          @@@@@@@@@@@      \r\n");
+			"       @@@@@@@@@@@          "SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"@@@                   @@@"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"          @@@@@@@@@@@      \r\n");
 	xil_printf(
-			"       @@@@@@@@@@@@         @@                     @@         &@@@@@@@@@@@      \r\n");
+			"       @@@@@@@@@@@@         "SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"@@                     @@"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"         &@@@@@@@@@@@      \r\n");
 	xil_printf(
-			"        @@@@@@@@@@@         @@                     @@         @@@@@@@@@@@       \r\n");
+			"        @@@@@@@@@@@         "SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"@@                     @@"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"         @@@@@@@@@@@       \r\n");
 	xil_printf(
 			"         @@@@@@@@@@@                                         &@@@@@@@@@@        \r\n");
 	xil_printf(
@@ -226,7 +224,32 @@ void printWelcome() {
 	xil_printf(
 			"                           @@@@@@@@@@@@@@@@@@@@@@@@@@                           \r\n");
 	xil_printf(
-			"================================================================================\r\n\r\n");
+			"                                                                                                        \r\n\r\n\r\n");
+	xil_printf(SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)
+			"8888888 8888888888 8 8888        8 8 8888888888 8888888 8888888888"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"   .8."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"          \r\n");
+	xil_printf(
+			"      8 8888       8 8888        8 8 8888             8 8888"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"        .888."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"         \r\n");
+	xil_printf(
+			"      8 8888       8 8888        8 8 8888             8 8888"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)"       :88888."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"        \r\n");
+	xil_printf(
+			"      8 8888       8 8888        8 8 8888             8 8888      ."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)" `88888."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"       \r\n");
+	xil_printf(
+			"      8 8888       8 8888        8 8 888888888888     8 8888     .8."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)" `88888."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"      \r\n");
+	xil_printf(
+			"      8 8888       8 8888        8 8 8888             8 8888    .8`8."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)" `88888."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"     \r\n");
+	xil_printf(
+			"      8 8888       8 8888888888888 8 8888             8 8888   .8' `8."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)" `88888."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"    \r\n");
+	xil_printf(
+			"      8 8888       8 8888        8 8 8888             8 8888  .8'   `8."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)" `88888."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"   \r\n");
+	xil_printf(
+			"      8 8888       8 8888        8 8 8888             8 8888 .888888888."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)" `88888."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"  \r\n");
+	xil_printf(
+			"      8 8888       8 8888        8 8 888888888888     8 8888.8'       `8."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_RED)" `88888."SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)" \r\n");
+	xil_printf("\r\n");
+	xil_printf(
+			"=====================================================================================\r\n");
+	xil_printf(
+			"=====================================================================================\r\n\r\n");
 
 }
 
@@ -257,11 +280,9 @@ void printPrompt(double *phase_result, int *pwm_result, int pos_x_size,
 	 * logic for user input
 	 *
 	 */
-//	fputs(SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_MAGENTA), stdout);
-	xil_printf("\r\nCurrent Modes: Display=0 New_Angle=1 Beam_Mode=2\r\n");
-	xil_printf("WELAC ==>");
+	xil_printf(SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_YELLOW)"Current Modes: Display=0 New_Angle=1 Beam_Mode=2\r\n");
+	xil_printf(SHELL_FORMAT_RESET"(WELAC) ==>");
 	getUserInput();
-	//xil_printf("Recieved: %s\r\n",RecvBuffer);
 	commandParser(phase_result, pwm_result, pos_x_size, pos_x, desired_angle);
 	xil_printf(
 			"__________________________________________________________________________\r\n");
@@ -271,6 +292,7 @@ void getUserInput() {
 	/*
 	 * Function to get user input and store data in the RecvBuffer Pointer
 	 *
+	 * Note: can check input with "xil_printf("Recieved: %s\r\n",RecvBuffer);"
 	 */
 	ReceivedCount = 0;
 	bufferRefresh(RecvBuffer); // refresh the buffer before receiving data
@@ -314,7 +336,15 @@ void commandParser(double *phase_result, int *pwm_result, int pos_x_size,
 		displayInfo(phase_result, pwm_result, pos_x_size, desired_angle);
 	} else if (*RecvBuffer == (char) (Beam_Mode + ASCII_OFFSET)) {
 		xil_printf("Beam_Mode Selected\r\n");
+		xil_printf("Set Time Duration (secs): ");
+		getUserInput();
+		beamMode((int) stringToDouble(RecvBuffer));
 	}
+}
+
+void beamMode(int secs) {
+	xil_printf("Steering for %d secs", secs);
+
 }
 
 void displayInfo(double *phase_result, int *pwm_result, int pos_x_size,
@@ -323,7 +353,7 @@ void displayInfo(double *phase_result, int *pwm_result, int pos_x_size,
 	print_double(*desired_angle);
 	xil_printf("\r\n");
 	for (int i = 0; i < pos_x_size; i++) { // debug to make sure phase calculations are being calculated and assigned correctly
-		xil_printf("Phase element %d %d: ", i,(int)(phase_result[i]*100000));
+		xil_printf("Phase element %d: ", i); //,(int)(phase_result[i]*100000));
 		print_float(phase_result[i]);
 		xil_printf("\r\n");
 	}
@@ -335,14 +365,14 @@ void displayInfo(double *phase_result, int *pwm_result, int pos_x_size,
 
 void updatePhase(double *phase_result, int *pwm_result, int pos_x_size,
 		double *pos_x, double *desired_angle) {
-	calcPhase(pos_x, phase_result, pos_x_size, desired_angle,pos_offset); // calculate the phases for each array element
+	calcPhase(pos_x, phase_result, pos_x_size, desired_angle, phase_offset); // calculate the phases for each array element
 
 	for (int i = 0; i < pos_x_size; i++) { // Map phase caluculations to PWM range (0-2^11)
 		pwm_result[i] = mapToPWM(phase_result[i]);
 	}
 
-	programPWM(pwm_result[0], pwm_result[1], pwm_result[2], pwm_result[3], pwm_result[4],
-			pwm_result[5], pwm_result[6], pwm_result[7]);
+	programPWM(pwm_result[0], pwm_result[1], pwm_result[2], pwm_result[3],
+			pwm_result[4], pwm_result[5], pwm_result[6], pwm_result[7]);
 }
 
 void bufferRefresh(char * RecvBuffer) {
