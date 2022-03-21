@@ -57,7 +57,6 @@ const double pwm_Min = 0;
 const double pwm_Max = pow(2, 11);
 double phase_offset[] = { -2.111848395, 1.064650844, 1.361356817, -1.8675023,
 		-0.523598776, -1.745329252, -1.396263402, -1.466076572 };
-//double pos_offset[] = {0,0,0,0,0,0,0,0};
 enum Mode {
 	Display, New_Angle, Beam_Mode
 };
@@ -158,13 +157,13 @@ int main(void) {
 //		sleep(1);
 
 	}
-
-	//xil_printf("Successfully ran Tmrctr PWM Example\r\n");
 	return XST_SUCCESS;
 }
 
 void printWelcome() {
-
+/*
+ * Terminal Splash Screen function
+ */
 	xil_printf(
 			SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE)"                                @@@@@@@@@@@@@@@@@@                              \r\n");
 	xil_printf(
@@ -325,6 +324,10 @@ void getUserInput() {
 
 void commandParser(double *phase_result, int *pwm_result, int pos_x_size,
 		double *pos_x, double *desired_angle) {
+	/*
+	 * Parses User input and calls the respective functions
+	 *
+	*/
 	if (*RecvBuffer == (char) (Display + ASCII_OFFSET)) {
 		xil_printf("Displaying Values: \r\n");
 		displayInfo(phase_result, pwm_result, pos_x_size, desired_angle);
@@ -336,14 +339,32 @@ void commandParser(double *phase_result, int *pwm_result, int pos_x_size,
 		displayInfo(phase_result, pwm_result, pos_x_size, desired_angle);
 	} else if (*RecvBuffer == (char) (Beam_Mode + ASCII_OFFSET)) {
 		xil_printf("Beam_Mode Selected\r\n");
-		xil_printf("Set Time Duration (secs): ");
-		getUserInput();
-		beamMode((int) stringToDouble(RecvBuffer));
+		beamMode(phase_result, pwm_result, pos_x_size, pos_x, desired_angle,5);
 	}
 }
 
-void beamMode(int secs) {
-	xil_printf("Steering for %d secs", secs);
+void beamMode(double *phase_result, int *pwm_result, int pos_x_size,
+		double *pos_x, double *desired_angle,int angle_interval) {
+	/*
+	 * Function that automatically updates and applies a gradual phase shift
+	 */
+	bufferRefresh(RecvBuffer); // refresh the buffer before receiving data
+	xil_printf(SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_CYAN)"Press Enter to Exit\r\n\r\n"SHELL_COLOR_ESCAPE_SEQ(GEN_FORMAT_DIM";"FOREGROUND_COL_WHITE));
+	*desired_angle=0;
+	while (1) {
+			*desired_angle+=angle_interval;
+			updatePhase(phase_result, pwm_result, pos_x_size, pos_x, desired_angle);
+			xil_printf("Current Angle: ");
+			print_double(*desired_angle);
+			xil_printf("\r\n");
+			ReceivedCount += XUartLite_Recv(&UartLite, RecvBuffer + ReceivedCount,
+			COMMAND_BUFFER_SIZE - ReceivedCount);
+			if (RecvBuffer[ReceivedCount - 1] == ENTER_ASCII_CODE) {
+				xil_printf("\r\n"); // formatting
+				break;
+			}
+			sleep(1);
+		}
 
 }
 
