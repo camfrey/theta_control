@@ -406,7 +406,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>d68eba72</spirit:value>
+            <spirit:value>88098b5f</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -422,7 +422,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>d68eba72</spirit:value>
+            <spirit:value>88098b5f</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -436,7 +436,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>12e587f2</spirit:value>
+            <spirit:value>eb86c5a6</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -450,7 +450,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>08f795f7</spirit:value>
+            <spirit:value>fa83cf1a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -487,9 +487,13 @@
         <spirit:name>PWM</spirit:name>
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
+          <spirit:vector>
+            <spirit:left spirit:format="long" spirit:resolve="dependent" spirit:dependency="(spirit:decode(id(&apos;MODELPARAM_VALUE.C_NUM_CHANNELS&apos;)) - 1)">7</spirit:left>
+            <spirit:right spirit:format="long">0</spirit:right>
+          </spirit:vector>
           <spirit:wireTypeDefs>
             <spirit:wireTypeDef>
-              <spirit:typeName>std_logic</spirit:typeName>
+              <spirit:typeName>std_logic_vector</spirit:typeName>
               <spirit:viewNameRef>xilinx_vhdlsynthesis</spirit:viewNameRef>
               <spirit:viewNameRef>xilinx_vhdlbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
@@ -942,6 +946,11 @@
         <spirit:displayName>C Pwm Counter Width</spirit:displayName>
         <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_PWM_COUNTER_WIDTH">11</spirit:value>
       </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>C_NUM_CHANNELS</spirit:name>
+        <spirit:displayName>C Num Channels</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_NUM_CHANNELS" spirit:minimum="0" spirit:rangeType="long">8</spirit:value>
+      </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
   <spirit:choices>
@@ -968,6 +977,15 @@
     <spirit:fileSet>
       <spirit:name>xilinx_vhdlsynthesis_view_fileset</spirit:name>
       <spirit:file>
+        <spirit:name>hdl/pwm.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/theta_control_pkg.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+        <spirit:logicalName>theta_control_lib</spirit:logicalName>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>hdl/pwm_gen_v1_0_S_AXI.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
       </spirit:file>
@@ -978,11 +996,20 @@
       <spirit:file>
         <spirit:name>hdl/pwm_gen_v1_0.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_4a299c2a</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_27eb2b82</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
       <spirit:name>xilinx_vhdlbehavioralsimulation_view_fileset</spirit:name>
+      <spirit:file>
+        <spirit:name>hdl/pwm.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/theta_control_pkg.vhd</spirit:name>
+        <spirit:fileType>vhdlSource</spirit:fileType>
+        <spirit:logicalName>theta_control_lib</spirit:logicalName>
+      </spirit:file>
       <spirit:file>
         <spirit:name>hdl/pwm_gen_v1_0_S_AXI.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
@@ -1033,7 +1060,7 @@
       <spirit:file>
         <spirit:name>xgui/pwm_gen_v1_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_08f795f7</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_fa83cf1a</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -1119,6 +1146,11 @@
       <spirit:displayName>C Pwm Counter Width</spirit:displayName>
       <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_PWM_COUNTER_WIDTH">11</spirit:value>
     </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>C_NUM_CHANNELS</spirit:name>
+      <spirit:displayName>C Num Channels</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.C_NUM_CHANNELS" spirit:minimum="0" spirit:rangeType="long">8</spirit:value>
+    </spirit:parameter>
   </spirit:parameters>
   <spirit:vendorExtensions>
     <xilinx:coreExtensions>
@@ -1132,8 +1164,8 @@
       <xilinx:xpmLibraries>
         <xilinx:xpmLibrary>XPM_CDC</xilinx:xpmLibrary>
       </xilinx:xpmLibraries>
-      <xilinx:coreRevision>6</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2021-11-26T19:49:58Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>13</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2022-03-15T00:05:54Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="ui.data.coregen.df@65492827_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.df@42fbeb29_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
@@ -1237,16 +1269,158 @@
         <xilinx:tag xilinx:name="ui.data.coregen.df@15765f01_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.df@66563517_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.df@60139550_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2141deaf_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@97ba0f7_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@7126f531_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@672575b2_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@338efbc_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@59f8857e_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@66eb53e_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1747b9c9_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3fab2e49_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1c2deadd_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1ebdc0de_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2201de7f_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@24f74a48_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2abd5203_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@77217529_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@595452c7_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@482d78ef_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@64bcd5c6_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@709cb405_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4ce26c18_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@656f60b6_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@217d7dd6_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@57caf6ef_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@21ba643c_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2e4e061c_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2ffb49fc_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@390d4c56_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@46ed0ce3_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@79c91f57_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@46a8e00e_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@148ef59d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@14338d63_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3f5fded0_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5a1da2ab_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@45ea7e71_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@278ee808_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@7a2ef70c_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@7fb04371_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@7b0e88de_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4119688a_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2ba3ce53_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@41642f4e_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@69be8676_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5f0bbe34_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@46978614_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@45bf2ac9_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3e9a3b2d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@256ec215_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@12ae7df4_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@bc45205_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1d46ce75_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1d2ba9cc_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@589f99ca_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3fa115d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4ea10da7_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@282c715d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@39f0b8fb_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3f3d264c_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@76835cb7_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4b7b2812_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5d6cfffd_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@120bc001_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4b64e477_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1a88cc5a_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6943497a_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4ee05fc8_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@725332e5_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@7e4e8fa2_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@477a062c_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@11062e9c_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@be5bfd5_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@377bb77_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3ac75f93_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@7c045f9a_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@331ca3f5_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@59b0258b_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1d872504_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@77a9ff3d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@42fbfc9f_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@624e4053_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@47006faa_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@7f6d12e1_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5a5f2923_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2ccba4d6_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2514b742_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@49cb3760_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2f578d67_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@761ce42b_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@46960021_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@141f9667_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5d5a816_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@309effc_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@67eb42ec_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1ed9d43d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2bfdead9_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5ce73db_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@19b9782c_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2141d2a8_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@49d56df7_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6f3f22a6_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6259333_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3fb755ee_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@457add5f_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1781df4a_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@7672324b_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@29c6e997_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4ac91017_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@25576226_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@58c1236f_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@36edc2d2_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@feb0ab0_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4afea0bd_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@73a13ae2_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@60098eb4_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3d44e9c1_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5ebdfad7_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@78d9892b_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@41b6e17f_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@568ae4d7_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5b2f7fe5_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@47817a25_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6c1a99c4_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@31d0d7b5_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@7426fd5f_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@72a2d031_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@32d258f2_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@3445e2d9_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@1452e1f7_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@48cee5ad_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@753e01a8_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@575d147f_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@2b1abc7d_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5ce6b58c_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@13c64635_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@a9bab90_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@4dc4aa23_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@59a136bf_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@5fc03ac5_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@54167417_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@6a4eec2e_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@61de3cff_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.df@141deddb_ARCHIVE_LOCATION">/home/camfrey/Xilinx/theta_control/ip_repo/pwm_gen_1.0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2021.1</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="baad3ad8"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="c30980da"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="85b99eb1"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="d6f2ef3c"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="ec7626ce"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="f1eb9ca8"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="5583e22c"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="9315e6fa"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="82c73ff6"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="978569d3"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>
