@@ -1,0 +1,3 @@
+[submodule "SonicArrayPCB"]
+	path = SonicArrayPCB
+	url = git@github.com:dmdesant/SonicArrayPCB.git
